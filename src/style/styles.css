@@ -1,0 +1,24 @@
+.home .left-card {
+  width: 40%;
+  margin: 5%;
+  float: left; }
+  .home .left-card .source-selector {
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+    background-color: lightgray !important;
+    color: black !important; }
+  .home .left-card .start-button {
+    margin: 10%; }
+.home .right-area {
+  width: 50%;
+  float: right;
+  padding: 5%; }
+.home .right-settings-drawer nav {
+  max-width: 60%; }
+.home .right-settings-drawer .close-button {
+  position: absolute;
+  top: 20px;
+  left: 20px; }
+
+/*# sourceMappingURL=styles.css.map */
