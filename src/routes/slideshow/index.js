@@ -2,9 +2,10 @@ import { h, Component } from 'preact';
 import { bind } from 'decko';
 import {route} from 'preact-router';
 
+/**
+ * @property spi: seconds per image ( -> slideshow speed)
+ */
 export default class Slideshow extends Component {
-
-
 
 	componentWillMount() {
 
@@ -12,12 +13,18 @@ export default class Slideshow extends Component {
 
 		fhpxService.initFhpx();
 
-		setInterval(() => {
+		let showNextImg = () => {
 			let nextImg = fhpxService.getNextImage();
 			console.log(nextImg);
 			this.setState({
 				currentImage: nextImg
-		});}, 5000);
+			});
+		}
+
+		showNextImg();
+		setInterval(() => {
+			showNextImg();
+			}, this.props.spi*1000);
 	}
 
 	render() {

@@ -3,10 +3,8 @@ import { Router } from 'preact-router';
 
 import Header from './header';
 import Home from '../routes/home';
-import Profile from '../routes/profile';
 import Slideshow from '../routes/slideshow';
 // import Home from 'async!../routes/home';
-// import Profile from 'async!../routes/profile';
 import FhPxService from '../service/500px-service';
 
 export default class App extends Component {
@@ -26,7 +24,6 @@ export default class App extends Component {
 				<Router onChange={this.handleRoute}>
 					<Home path="/" fhpxService={fhpxService} />
 					<Slideshow path="/slideshow" fhpxService={fhpxService} />
-					<Profile path="/profile/:user" />
 				</Router>
 			</div>
 		);

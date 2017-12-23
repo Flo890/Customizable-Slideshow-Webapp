@@ -9,21 +9,121 @@ import Drawer from 'preact-material-components/Drawer';
 import 'preact-material-components/Drawer/style.css';
 import Slider from 'preact-material-components/Slider';
 import 'preact-material-components/Slider/style.css';
+import TextField from 'preact-material-components/TextField';
+import 'preact-material-components/TextField/style.css';
+import Icon from 'preact-material-components/Icon';
+import 'preact-material-components/Icon/style.css';
 import style from './style';
 
 import { bind } from 'decko';
-import {route} from 'preact-router';
+import { route } from 'preact-router';
 
 export default class Home extends Component {
 
 	constructor() {
 		super();
 		this.state = {
-			drawerOpen: false
+			drawerOpen: false,
+			sources: {
+				fhpx: {
+					// default settings for 500px slideshow
+					isSelected: true,
+					features: {
+						standards: ['popular'],
+						users: ['flobe94']
+					}
+				}
+			},
+			settings: {
+				secondsPerImg: 5
+			}
 		};
 	}
 
+	buildfhpxSettings() {
+
+		let fhpxStandardFeatures = [
+			// "features" according to the 500px api
+			{ shortname: 'popular', displayname: 'Popular' },
+			{ shortname: 'highest_rated', displayname: 'Highest Rated' },
+			{ shortname: 'upcoming', displayname: 'Upcoming' },
+			{ shortname: 'editors', displayname: 'Editor\'s Choice' },
+			{ shortname: 'fresh_today', displayname: 'Fresh' }
+		];
+		return (
+			<div>
+				<h3>500px settings</h3>
+				<p>show photos from feeds</p>
+				{
+					fhpxStandardFeatures.map(aFeature => (
+						<div className="mdc-form-field">
+							<Checkbox
+								checked={this.state.sources.fhpx.features.standards.includes(aFeature.shortname) || false}
+								onChange={e => {
+									if (e.target.checked){
+										this.state.sources.fhpx.features.standards.push(aFeature.shortname);
+										this.setStateChanged();
+									}
+									else {
+										let index = this.state.sources.fhpx.features.standards.indexOf(aFeature.shortname);
+										this.state.sources.fhpx.features.standards.splice(index,1);
+										this.setStateChanged();
+									}
+								}}
+							/><label>{aFeature.displayname}</label>
+						</div>
+					))
+				}
+				<p>show photos from users</p>
+				{
+					this.state.sources.fhpx.features.users.map(aUser => (
+						<div className="mdc-form-field">
+							<Checkbox checked
+									  onChange={e => {
+										  if (e.target.checked){
+											  // should usually not occur I think
+										  }
+										  else {
+										  	// remove this user
+											  let index = this.state.sources.fhpx.features.users.indexOf(aUser);
+											  this.state.sources.fhpx.features.users.splice(index,1);
+											  this.setStateChanged();
+										  }
+									  }}
+							/>
+							<label>{aUser}</label>
+						</div>
+					))
+				}
+				<div className="mdc-form-field">
+					<TextField label="500px username"  ref={dlg => {
+						this.dlg = dlg;
+					}} />
+					<Button onClick={() => {
+						console.log(this.dlg.MDComponent); //TODO bug: after having removed one username, this.dlg is undefined -> cannot add new username
+						this.state.sources.fhpx.features.users.push(this.dlg.MDComponent.input_.value);
+						this.setStateChanged();
+					}}>
+						<Button.Icon>check</Button.Icon>
+					</Button>
+				</div>
+
+				<Slider
+					discrete
+					min={0}
+					max={100}
+					value={20}
+					onChange={v => console.log('change:', v)}
+					onInput={v => console.log('input:', v)}
+				/>
+			</div>
+		);
+	}
+
 	render() {
+
+		let fhpxSettings = this.buildfhpxSettings();
+
 		return (
 			<div className="home" style={style.home}>
 				<Card className="left-card">
@@ -31,13 +131,21 @@ export default class Home extends Component {
 						this.setState({
 							drawerOpen: true
 						});
-					}}>
-						<Checkbox />500px
+					}}
+					>
+						<Checkbox
+							checked={this.state.sources.fhpx.isSelected || false}
+							onChange={e => {
+								this.setState({
+									sources: { fhpx: { isSelected: e.target.checked}}
+								});
+						}} />500px
 					</Button>
 
 					<Button raised className="start-button" onClick={() => {
 						this.onStartSlideshow();
-					}}>Start Slideshow<i class="material-icons">play_arrow</i></Button>
+					}}
+					>Start Slideshow<i class="material-icons">play_arrow</i></Button>
 
 				</Card>
 				<div className="right-area">
@@ -53,13 +161,13 @@ export default class Home extends Component {
 					}}
 					open={this.state.drawerOpen}
 					onOpen={() => {
-						console.log("open");
+						console.log('open');
 					}}
 					onClose={() => {
 						this.setState({
 							drawerOpen: false
 						});
-						console.log("Closed");
+						console.log('Closed');
 					}}
 				>
 					<Drawer.TemporaryDrawerHeader dir="ltr">
@@ -67,22 +175,16 @@ export default class Home extends Component {
 							this.setState({
 								drawerOpen: false
 							});
-						}}>
+						}}
+						>
 							<i class="material-icons">close</i>
 						</Button>
 						Hello Header
 					</Drawer.TemporaryDrawerHeader>
-					<Drawer.DrawerItem dir="ltr">
-						<Slider
-							discrete
-							min={0}
-							max={100}
-							value={20}
-							onChange={v => console.log("change:", v)}
-							onInput={v => console.log("input:", v)}
-						/>
-					</Drawer.DrawerItem>
-					<Drawer.DrawerItem dir="ltr" selected={true}>Item2</Drawer.DrawerItem>
+					<Drawer.TemporaryDrawerContent dir="ltr">
+						{fhpxSettings}
+					</Drawer.TemporaryDrawerContent>
+					<Drawer.DrawerItem dir="ltr" selected>Item2</Drawer.DrawerItem>
 				</Drawer.TemporaryDrawer>
 
 			</div>
@@ -91,8 +193,18 @@ export default class Home extends Component {
 
 	@bind
 	onStartSlideshow() {
-		let fhpxService = this.props.fhpxService;
-		console.log(fhpxService.isLoggedIn());
-		route('/slideshow');
+		if (this.state.sources.fhpx.isSelected === true) {
+			let fhpxService = this.props.fhpxService;
+			fhpxService.setFhpxSourceSettings(this.state.sources.fhpx);
+			console.log(fhpxService.isLoggedIn());
+		}
+		route(`/slideshow?spi=${this.state.settings.secondsPerImg}`);
+	}
+
+	setStateChanged(){
+		// TODO find a better way
+		this.setState({
+			something: Math.random()
+		});
 	}
 }

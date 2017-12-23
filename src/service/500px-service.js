@@ -8,10 +8,12 @@ export default class FhPxService {
 	api: https://github.com/500px/api-documentation
 	 */
 
-	quantities = {
-		// see https://github.com/500px/api-documentation/blob/master/endpoints/photo/GET_photos.md for allowed standard features
-		standards: ['popular'],
-		users: ['flobe94']
+	sourceSettings = {
+		features: {
+			// default settings again; these here just in case someone directly goes to slideshow by url (so the set settings method was not called)
+			standards: ['popular'],
+			users: ['flobe94']
+		}
 	}
 	images = []
 	isLoading = false
@@ -26,8 +28,8 @@ export default class FhPxService {
 		});
 	}
 
-	setSettings(quantities){
-		this.quantities = quantities;
+	setFhpxSourceSettings(settings){
+		this.sourceSettings = settings;
 	}
 
 	getNextImage(){
@@ -39,15 +41,17 @@ export default class FhPxService {
 	}
 
 	loadImages() {
+		let imageSizeParam = this.getBestFittingImageSize();
 		// create promises for each type of image to load
 		let loadImagesPromises = [];
-		this.quantities.standards.forEach(aFeature => {
+		this.sourceSettings.features.standards.forEach(aFeature => {
 			loadImagesPromises.push(new Promise((resolve, reject) => {
 				_500px.api('/photos', {
 					feature: aFeature,
 					sort: 'created_at',
 					sort_direction: 'desc',
-					page: 1
+					page: 1,
+					image_size: imageSizeParam
 				}, response => {
 					if (response.success) {
 						console.log('received response:');
@@ -60,14 +64,15 @@ export default class FhPxService {
 				});
 			}));
 		});
-		this.quantities.users.forEach(username => {
+		this.sourceSettings.features.users.forEach(username => {
 			loadImagesPromises.push(new Promise((resolve, reject) => {
 				_500px.api('/photos', {
 					feature: 'user',
 					username: username,
 					sort: 'created_at',
 					sort_direction: 'desc',
-					page: 1
+					page: 1,
+					image_size: imageSizeParam
 				}, response => {
 					console.log('received response:');
 					console.log(response);
@@ -109,6 +114,21 @@ export default class FhPxService {
 			console.error(`one or more promises failed: ${error}`);
 			this.isLoading = false;
 		});
+	}
+
+	getBestFittingImageSize(){
+		let height = isNaN(window.innerHeight) ? window.clientHeight : window.innerHeight;
+		if (height > 1080) {
+			return 2048; // 2048 on longest edge
+		}
+		else if (height > 600) {
+			return 6; // 1080 px high
+		}
+		else if (height > 450) {
+			return 21; // 600 px high
+		} else {
+			return 31; // 450 px high
+		}
 	}
 
 }
