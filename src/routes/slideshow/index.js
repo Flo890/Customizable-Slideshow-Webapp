@@ -14,29 +14,33 @@ export default class Slideshow extends Component {
 		fhpxService.initFhpx();
 
 		let showNextImg = () => {
-			let nextImg = fhpxService.getNextImage();
-			console.log(nextImg);
-			this.setState({
-				currentImage: nextImg
+			fhpxService.getNextImagePromise().then(nextImg => {
+				console.log('next image:',nextImg);
+
+				this.setState({
+					currentImage: nextImg
+				});
+			},
+			error => {
+				alert('loading images failed');
 			});
 		}
 
 		showNextImg();
 		setInterval(() => {
 			showNextImg();
-			}, this.props.spi*1000);
+			}, (this.props.spi ? this.props.spi : 5)*1000);
 	}
 
 	render() {
 
 		let image = <p>TODO loading spinner</p>;
 		if (this.state.currentImage) {
-			image = <img src={this.state.currentImage.image_url} />;
+			image = <img id="main-img" src={this.state.currentImage.image_url} />;
 		}
 
 		return (
-			<div>
-				<h1>Slideshow</h1>
+			<div id="slideshow-container">
 				{image}
 			</div>
 		);

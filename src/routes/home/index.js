@@ -52,6 +52,7 @@ export default class Home extends Component {
 		];
 		return (
 			<div>
+
 				<h3>500px settings</h3>
 				<p>show photos from feeds</p>
 				{
@@ -108,14 +109,33 @@ export default class Home extends Component {
 					</Button>
 				</div>
 
+				<div>
 				<Slider
 					discrete
-					min={0}
-					max={100}
-					value={20}
-					onChange={v => console.log('change:', v)}
-					onInput={v => console.log('input:', v)}
+					min={1}
+					max={20}
+					value={this.state.settings.secondsPerImg}
+					onChange={v => {
+						// fires when slider movement finished
+						this.setState({
+							settings: {
+								secondsPerImg: v
+							}
+						});
+						console.log(`new slider value ${v}`);
+					}}
+					onInput={v => {
+						// // fires on every slider movement
+						// this.setState({
+						// 	settings: {
+						// 		secondsPerImg: v
+						// 	}
+						// });
+						// console.log(`new slider value ${v}`);
+					}}
 				/>
+				</div>
+
 			</div>
 		);
 	}

@@ -32,15 +32,24 @@ export default class FhPxService {
 		this.sourceSettings = settings;
 	}
 
-	getNextImage(){
-		if (this.images.length < 3 && !this.isLoading) {
-			// load new images
-			this.loadImages();
-		}
-		return this.images.splice(0,1)[0];
+	getNextImagePromise(){
+		return new Promise((resolve,reject) => {
+			if (this.images.length < 3 && !this.isLoading) {
+				// load new images
+				this.loadImages(() => {
+					resolve(this.images.splice(0,1)[0]);
+				},
+				error => {
+					reject(error);
+				});
+			}
+			else {
+				resolve(this.images.splice(0,1)[0]);
+			}
+		});
 	}
 
-	loadImages() {
+	loadImages(successCallback,errorCallback) {
 		let imageSizeParam = this.getBestFittingImageSize();
 		// create promises for each type of image to load
 		let loadImagesPromises = [];
@@ -68,7 +77,7 @@ export default class FhPxService {
 			loadImagesPromises.push(new Promise((resolve, reject) => {
 				_500px.api('/photos', {
 					feature: 'user',
-					username: username,
+					username,
 					sort: 'created_at',
 					sort_direction: 'desc',
 					page: 1,
@@ -109,9 +118,11 @@ export default class FhPxService {
 			console.log('images mixed');
 			console.log(mixedImages);
 			console.log(this.images);
+			successCallback();
 		}, error => {
 			// one or more failed
 			console.error(`one or more promises failed: ${error}`);
+			errorCallback(error);
 			this.isLoading = false;
 		});
 	}
@@ -126,9 +137,9 @@ export default class FhPxService {
 		}
 		else if (height > 450) {
 			return 21; // 600 px high
-		} else {
-			return 31; // 450 px high
 		}
+		return 31; // 450 px high
+		
 	}
 
 }
