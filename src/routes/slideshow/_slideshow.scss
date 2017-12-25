@@ -16,4 +16,40 @@
     // horizontally align image
     margin: auto;
   }
+
+  #slideshow-controls-overlay {
+    opacity: .5;
+    width:100%;
+    height:100%;
+    position: absolute;
+
+    Button {
+      width: 96px; // = 64px of icon + 2x 16px padding of button
+      height: 96px;
+
+      i {
+        font-size: 64px;
+        color: white;
+      }
+    }
+
+    .close-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    .bottom-bar{
+      * {
+        float: left;
+      }
+
+      position: absolute;
+      left: 40vw;
+      bottom: 0;
+      background-color: #313131;
+      opacity: 0.8;
+
+
+    }
+  }
 }

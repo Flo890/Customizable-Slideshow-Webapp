@@ -52,9 +52,7 @@ export default class Home extends Component {
 		];
 		return (
 			<div>
-
-				<h3>500px settings</h3>
-				<p>show photos from feeds</p>
+				<h4>show photos from feeds</h4>
 				{
 					fhpxStandardFeatures.map(aFeature => (
 						<div className="mdc-form-field">
@@ -75,7 +73,7 @@ export default class Home extends Component {
 						</div>
 					))
 				}
-				<p>show photos from users</p>
+				<h4>show photos from users</h4>
 				{
 					this.state.sources.fhpx.features.users.map(aUser => (
 						<div className="mdc-form-field">
@@ -109,33 +107,43 @@ export default class Home extends Component {
 					</Button>
 				</div>
 
-				<div>
-				<Slider
-					discrete
-					min={1}
-					max={20}
-					value={this.state.settings.secondsPerImg}
-					onChange={v => {
-						// fires when slider movement finished
+					<h4>slideshow speed (seconds per image)</h4>
+					{/*<Slider //TODO bug: only works after adding or removing a user*/}
+						{/*dir="ltr"*/}
+						{/*discrete*/}
+						{/*min={1}*/}
+						{/*max={20}*/}
+						{/*value={this.state.settings.secondsPerImg}*/}
+						{/*onChange={v => {*/}
+							{/*// fires when slider movement finished*/}
+							{/*this.setState({*/}
+								{/*settings: {*/}
+									{/*secondsPerImg: v*/}
+								{/*}*/}
+							{/*});*/}
+							{/*console.log(`new slider value ${v}`);*/}
+						{/*}}*/}
+						{/*onInput={v => {*/}
+							{/*// // fires on every slider movement*/}
+							{/*// this.setState({*/}
+							{/*// 	settings: {*/}
+							{/*// 		secondsPerImg: v*/}
+							{/*// 	}*/}
+							{/*// });*/}
+							{/*// console.log(`new slider value ${v}`);*/}
+						{/*}}*/}
+					{/*/>*/}
+				<div className="spi-plusminus">
+					<Button onClick={() => {
 						this.setState({
-							settings: {
-								secondsPerImg: v
-							}
+							settings: { secondsPerImg: this.state.settings.secondsPerImg-1 }
 						});
-						console.log(`new slider value ${v}`);
-					}}
-					onInput={v => {
-						// // fires on every slider movement
-						// this.setState({
-						// 	settings: {
-						// 		secondsPerImg: v
-						// 	}
-						// });
-						// console.log(`new slider value ${v}`);
-					}}
-				/>
+					}}>-1</Button><p className="spi-text">{this.state.settings.secondsPerImg}s</p><Button onClick={() => {
+					this.setState({
+						settings: { secondsPerImg: this.state.settings.secondsPerImg+1 }
+					});
+				}}>+1</Button>
 				</div>
-
 			</div>
 		);
 	}
@@ -159,7 +167,7 @@ export default class Home extends Component {
 								this.setState({
 									sources: { fhpx: { isSelected: e.target.checked}}
 								});
-						}} />500px
+						}} />500px<i class="material-icons">settings</i>
 					</Button>
 
 					<Button raised className="start-button" onClick={() => {
@@ -199,12 +207,11 @@ export default class Home extends Component {
 						>
 							<i class="material-icons">close</i>
 						</Button>
-						Hello Header
+						<h3>500px settings</h3>
 					</Drawer.TemporaryDrawerHeader>
-					<Drawer.TemporaryDrawerContent dir="ltr">
+					<Drawer.TemporaryDrawerContent dir="ltr" className="drawer-content-container">
 						{fhpxSettings}
 					</Drawer.TemporaryDrawerContent>
-					<Drawer.DrawerItem dir="ltr" selected>Item2</Drawer.DrawerItem>
 				</Drawer.TemporaryDrawer>
 
 			</div>

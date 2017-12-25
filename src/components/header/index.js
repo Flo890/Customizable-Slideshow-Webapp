@@ -60,7 +60,7 @@ export default class Header extends Component {
 							<Toolbar.Icon menu onClick={this.openDrawer}>
 								menu
 							</Toolbar.Icon>
-							<Toolbar.Title>Preact app</Toolbar.Title>
+							<Toolbar.Title>Digital Picture Frame / Slideshow Webapp</Toolbar.Title>
 						</Toolbar.Section>
 						<Toolbar.Section align-end onClick={this.openSettings}>
 							<Toolbar.Icon>settings</Toolbar.Icon>
@@ -73,6 +73,14 @@ export default class Header extends Component {
 							<List.LinkItem onClick={this.goHome}>
 								<List.ItemIcon>home</List.ItemIcon>
 								Home
+							</List.LinkItem>
+							<List.LinkItem onClick={() => {window.open('https://www.tf-fotovideo.de','_blank')}}>
+									<List.ItemIcon>web</List.ItemIcon>
+									about the creator
+							</List.LinkItem>
+							<List.LinkItem onClick={() => {window.open('mailto:info@tf-fotovideo.de')}}>
+									<List.ItemIcon>email</List.ItemIcon>
+									contact me!
 							</List.LinkItem>
 						</List>
 					</Drawer.TemporaryDrawerContent>

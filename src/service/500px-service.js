@@ -17,15 +17,19 @@ export default class FhPxService {
 	}
 	images = []
 	isLoading = false
+	isInitialized = false;
 
 	isLoggedIn(){
 		return true;
 	}
 
-	initFhpx(){
-		_500px.init({
-			sdk_key: config.FHPX_JS_SDK_KEY
-		});
+	initFhpx() {
+		if (!this.isInitialized) {
+			_500px.init({
+				sdk_key: config.FHPX_JS_SDK_KEY
+			});
+			this.isInitialized = true;
+		}
 	}
 
 	setFhpxSourceSettings(settings){

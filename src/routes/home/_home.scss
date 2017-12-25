@@ -24,6 +24,11 @@
   .right-settings-drawer {
     nav {
       max-width: 60%;
+
+      .drawer-content-container {
+        margin: auto;
+      }
+
     }
     .close-button {
       position: absolute;
@@ -32,4 +37,19 @@
     }
   }
 
+}
+
+.spi-plusminus {
+  overflow: hidden;
+  * {
+    float: left;
+  }
+}
+.spi-text {
+  font-weight: bold;
+}
+
+.mdc-slider__track {
+  // behebt Symptome des Problems dass der slider irgendwie immernoch das dir="rtl" erbt
+  transform-origin: left top !important;
 }
