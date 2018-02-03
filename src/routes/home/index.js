@@ -154,7 +154,25 @@ export default class Home extends Component {
 
 		return (
 			<div className="home" style={style.home}>
+
+				<div className="bottom-area">
+					<div className="background-placeholder">
+						<img src="../../assets/bgPhoto1a-s.jpg"/>
+					</div>
+					<h1>What is this?</h1>
+					<p>The customizable slideshow webapp transforms your tablet or any other webbrowser-having device into a digital picture frame.
+						You can configure which images to show, currently supporting the 500px image platform. <br/>Stay tuned, other sources like cloud storings or uploading
+						your own images will follow!</p>
+
+					<div className="footer-box">
+						<div><a href="https://www.tf-fotovideo.de/"><p>Creator's Homepage</p></a></div>
+						<div><a href="https://www.tf-fotovideo.de/kontakt"><p>Contact</p></a></div>
+						<div><a href="https://www.tf-fotovideo.de/kontakt"><p>Impressum</p></a></div>
+					</div>
+				</div>
+
 				<Card className="left-card">
+					<h3>select image sources</h3>
 					<Button raised className="source-selector" onClick={() => {
 						this.setState({
 							drawerOpen: true
@@ -177,7 +195,7 @@ export default class Home extends Component {
 
 				</Card>
 				<div className="right-area">
-					<h2>Hello!</h2>
+					<h2>Welcome to the customizable Slideshow Webapp!</h2>
 				</div>
 
 
@@ -233,5 +251,35 @@ export default class Home extends Component {
 		this.setState({
 			something: Math.random()
 		});
+	}
+
+	componentDidMount() {
+
+		const gaurl = 'https://www.googletagmanager.com/gtag/js?id=UA-55880750-1';
+
+			(function (i, s, o, g, r, a, m) {
+				i['GoogleAnalyticsObject'] = r;
+				i[r] = i[r] || function () {
+					(i[r].q = i[r].q || []).push(arguments)
+				}, i[r].l = 1 * new Date();
+				a = s.createElement(o),
+					m = s.getElementsByTagName(o)[0];
+				a.async = 1;
+				a.src = g;
+				m.parentNode.insertBefore(a, m)
+			})(window, document, 'script', gaurl, 'ga');
+
+
+			window.dataLayer = window.dataLayer || [];
+
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+
+			gtag('js', new Date());
+
+			gtag('config', 'UA-55880750-1');
+
+
 	}
 }

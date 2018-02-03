@@ -1,8 +1,33 @@
 .home {
+
+  overflow: hidden;
+  height: 100vh;
+
+  background-size: 100%;
+  background-image: url('../assets/bgPhoto1a-s.jpg');
+  background-repeat: no-repeat;
+  @keyframes backgroundSwitch {
+    0% {background-image: url('../assets/bgPhoto1a-s.jpg');}
+    50% {background-image: url('../assets/bgPhoto1b-s.jpg');}
+    100% {background-image: url('../assets/bgPhoto1a-s.jpg');}
+  }
+  animation-name: backgroundSwitch;
+  animation-duration: 8s;
+  animation-timing-function: steps(1,start);
+  animation-iteration-count: infinite;
+
   .left-card {
     width: 40%;
     margin: 5%;
     float:left;
+    background: #FAFAFA;
+    padding:2%;
+
+    h3{
+      text-align: center;
+      margin-bottom: 0;
+    }
+
     .source-selector {
       margin-left: 10%;
       margin-right: 10%;
@@ -10,15 +35,49 @@
       background-color: lightgray !important;
       color: black !important;
     }
-    .start-button {
-      margin: 10%;
+    button {
+      margin: 5%;
     }
   }
 
   .right-area {
-    width:50%;
+    width:40%;
     float:right;
-    padding: 5%;
+    margin: 5%;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 0px 26px 20px rgba(255,255,255,0.5);
+
+    h2{
+      text-align: center;
+    }
+  }
+
+  .bottom-area{
+    position: absolute;
+
+    .background-placeholder{
+      opacity:0;
+      width:100%;
+      img{
+        width:100%;
+      }
+    }
+
+    h1,p{
+      text-align: center;
+    }
+    p{
+      font-size: 1.5em;
+      font-weight: 100;
+      margin-left: 10%;
+      margin-right: 10%;
+    }
+
+    .footer-box{
+      display: flex;
+      justify-content: space-around;
+      font-size: 1em;
+    }
   }
 
   .right-settings-drawer {

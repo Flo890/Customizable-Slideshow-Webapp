@@ -1,10 +1,10 @@
 {
-  "name": "preact-pictureframe",
+  "name": "Customizable Slideshow Webapp",
   "short_name": "preact-pictureframe",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "landscape",
   "background_color": "#fff",
   "theme_color": "#673ab8",
   "icons": [

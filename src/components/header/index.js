@@ -60,7 +60,7 @@ export default class Header extends Component {
 							<Toolbar.Icon menu onClick={this.openDrawer}>
 								menu
 							</Toolbar.Icon>
-							<Toolbar.Title>Digital Picture Frame / Slideshow Webapp</Toolbar.Title>
+							<Toolbar.Title>Customizable Slideshow Webapp</Toolbar.Title>
 						</Toolbar.Section>
 						<Toolbar.Section align-end onClick={this.openSettings}>
 							<Toolbar.Icon>settings</Toolbar.Icon>

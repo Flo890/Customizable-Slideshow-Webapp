@@ -1,27 +1,71 @@
-.home .left-card {
-  width: 40%;
-  margin: 5%;
-  float: left; }
-  .home .left-card .source-selector {
-    margin-left: 10%;
-    margin-right: 10%;
-    width: 80%;
-    background-color: lightgray !important;
-    color: black !important; }
-  .home .left-card .start-button {
-    margin: 10%; }
-.home .right-area {
-  width: 50%;
-  float: right;
-  padding: 5%; }
-.home .right-settings-drawer nav {
-  max-width: 60%; }
-  .home .right-settings-drawer nav .drawer-content-container {
-    margin: auto; }
-.home .right-settings-drawer .close-button {
-  position: absolute;
-  top: 20px;
-  left: 20px; }
+.home {
+  overflow: hidden;
+  height: 100vh;
+  background-size: 100%;
+  background-image: url("../assets/bgPhoto1a-s.jpg");
+  background-repeat: no-repeat;
+  animation-name: backgroundSwitch;
+  animation-duration: 8s;
+  animation-timing-function: steps(1, start);
+  animation-iteration-count: infinite; }
+@keyframes backgroundSwitch {
+  0% {
+    background-image: url("../assets/bgPhoto1a-s.jpg"); }
+  50% {
+    background-image: url("../assets/bgPhoto1b-s.jpg"); }
+  100% {
+    background-image: url("../assets/bgPhoto1a-s.jpg"); } }
+  .home .left-card {
+    width: 40%;
+    margin: 5%;
+    float: left;
+    background: #FAFAFA;
+    padding: 2%; }
+    .home .left-card h3 {
+      text-align: center;
+      margin-bottom: 0; }
+    .home .left-card .source-selector {
+      margin-left: 10%;
+      margin-right: 10%;
+      width: 80%;
+      background-color: lightgray !important;
+      color: black !important; }
+    .home .left-card button {
+      margin: 5%; }
+  .home .right-area {
+    width: 40%;
+    float: right;
+    margin: 5%;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 0px 26px 20px rgba(255, 255, 255, 0.5); }
+    .home .right-area h2 {
+      text-align: center; }
+  .home .bottom-area {
+    position: absolute; }
+    .home .bottom-area .background-placeholder {
+      opacity: 0;
+      width: 100%; }
+      .home .bottom-area .background-placeholder img {
+        width: 100%; }
+    .home .bottom-area h1, .home .bottom-area p {
+      text-align: center; }
+    .home .bottom-area p {
+      font-size: 1.5em;
+      font-weight: 100;
+      margin-left: 10%;
+      margin-right: 10%; }
+    .home .bottom-area .footer-box {
+      display: flex;
+      justify-content: space-around;
+      font-size: 1em; }
+  .home .right-settings-drawer nav {
+    max-width: 60%; }
+    .home .right-settings-drawer nav .drawer-content-container {
+      margin: auto; }
+  .home .right-settings-drawer .close-button {
+    position: absolute;
+    top: 20px;
+    left: 20px; }
 
 .spi-plusminus {
   overflow: hidden; }
